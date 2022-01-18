@@ -1,0 +1,14 @@
+#$ -V                                   #Inherit current environmentr  
+#$ -cwd   				#Start job in submission directory
+#$ -N FinalProjectMG37			#job
+#$ -j y					#combo stderr stdout
+#$ -q DK				#queue
+#$ -o $JOB_NAME.$JOB_ID.log		#name of output file
+#$ -l h_rt=24:00:00			#time
+#$ -S /bin/bash				#slot
+#$ -pe smp 4    			#4 slots                                  
+
+export BLASTDB=/Shared/class-BME5320-dkristensen/database/
+export PATH=$PATH:/Shared/class-BME5320-dkristensen/bin/
+
+blastp -query files"$SGE_TASK_ID".txt -db refseq_protein -num_alignments 100 -out Output"$SGE_TASK_ID".txt -outfmt "6 qseqid sseqid evalue length bitscore stitle" -num_threads 4
